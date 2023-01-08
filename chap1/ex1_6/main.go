@@ -20,11 +20,14 @@ import (
 
 //!+main
 
-var palette = []color.Color{color.RGBA{0x48, 0x38,0x38, 0xff}, color.RGBA{0xD2,0xD7,0x97, 0xff}}
+var palette = []color.Color{color.RGBA{0xcd, 0xb4,0xdb, 0xff}, color.RGBA{0xff,0xc8,0xdd, 0xff}, color.RGBA{0xff, 0xaf, 0xcc, 0xff}, color.RGBA{0xbd, 0xe0, 0xfe, 0xff}, color.RGBA{0xA2, 0xD2, 0xFF, 0xFF}}
 
 const (
-	blackIndex = 0 // first color in palette
-	greenIndex = 1 // next color in palette
+	pink1Index = 0 // first color in palette
+	pink2Index = 1 // next color in palette
+        pink3Index = 3
+        blue1Index = 4 
+        blue2Index = 5
 )
 
 func main() {
@@ -41,7 +44,7 @@ func main() {
 		}
 		http.HandleFunc("/", handler)
 		//!-http
-		log.Fatal(http.ListenAndServe("localhost:8000", nil))
+		log.Fatal(http.ListenAndServe("localhost:8080", nil))
 		return
 	}
 	//!+main
@@ -62,11 +65,12 @@ func lissajous(out io.Writer) {
 	for i := 0; i < nframes; i++ {
 		rect := image.Rect(0, 0, 2*size+1, 2*size+1)
 		img := image.NewPaletted(rect, palette)
+                colorIndex := uint8((i % 4) + 1)
 		for t := 0.0; t < cycles*2*math.Pi; t += res {
-			x := math.Sin(t)
+                	x := math.Sin(t)
 			y := math.Sin(t*freq + phase)
 			img.SetColorIndex(size+int(x*size+0.5), size+int(y*size+0.5),
-				greenIndex)
+				colorIndex)
 		}
 		phase += 0.1
 		anim.Delay = append(anim.Delay, delay)
