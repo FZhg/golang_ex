@@ -6,7 +6,7 @@ package popcount_test
 import (
 	"testing"
 
-	"gopl.ex/ch2/popcount"
+	"github.com/git-blossomnoodles/gopl.ex/chap2/ex2_3/popcount"
 )
 
 // -- Alternative implementations --
